@@ -3,32 +3,46 @@ import AdminLayout from "../../layouts/AdminLayout";
 export default function DataKriteria() {
   const kriteria = [
     {
+      no: 1,
       kode: "C1",
-      nama: "Kehadiran",
-      bobot: "25%",
+      kriteria: "Kehadiran",
       jenis: "Benefit",
-      skala: "0 – 100 (%)",
+      bobot: "20%",
     },
     {
+      no: 2,
       kode: "C2",
-      nama: "Produktivitas Kerja",
-      bobot: "35%",
+      kriteria: "Produktivitas Kerja (target & jumlah produksi)",
       jenis: "Benefit",
-      skala: "0 – 100 (%)",
+      bobot: "25%",
     },
     {
+      no: 3,
       kode: "C3",
-      nama: "Kualitas Hasil Kerja",
-      bobot: "20%",
+      kriteria: "Kualitas Hasil Kerja",
       jenis: "Benefit",
-      skala: "0 – 100 (%)",
+      bobot: "15%",
     },
     {
+      no: 4,
       kode: "C4",
-      nama: "Kedisiplinan",
-      bobot: "20%",
+      kriteria: "Kedisplinan",
       jenis: "Benefit",
-      skala: "0 – 100 (%)",
+      bobot: "20%",
+    },
+    {
+      no: 5,
+      kode: "C5",
+      kriteria: "Jumlah Kesalahan Produksi",
+      jenis: "Cost",
+      bobot: "10%",
+    },
+    {
+      no: 6,
+      kode: "C6",
+      kriteria: "Waktu Penyelesaian Pekerjaan",
+      jenis: "Cost",
+      bobot: "10%",
     },
   ];
 
@@ -40,25 +54,23 @@ export default function DataKriteria() {
         <table className="w-full text-sm">
           <thead className="bg-gray-100">
             <tr>
-              <th className="border px-3 py-2">Kode</th>
-              <th className="border px-3 py-2">Nama Kriteria</th>
-              <th className="border px-3 py-2">Bobot</th>
+              <th className="border px-3 py-2">No</th>
+              <th className="border px-3 py-2">Kode Kriteria</th>
+              <th className="border px-3 py-2">Kriteria</th>
               <th className="border px-3 py-2">Jenis</th>
-              <th className="border px-3 py-2">Skala</th>
+              <th className="border px-3 py-2">Bobot</th>
             </tr>
           </thead>
           <tbody>
             {kriteria.map((k) => (
               <tr key={k.kode} className="text-center">
                 <td className="border px-3 py-2 font-semibold">
-                  {k.kode}
+                  {k.no}
                 </td>
-                <td className="border px-3 py-2 text-left">
-                  {k.nama}
-                </td>
-                <td className="border px-3 py-2">{k.bobot}</td>
+                <td className="border px-3 py-2">{k.kode}</td>
+                <td className="border px-3 py-2">{k.kriteria}</td>
                 <td className="border px-3 py-2">{k.jenis}</td>
-                <td className="border px-3 py-2">{k.skala}</td>
+                <td className="border px-3 py-2">{k.bobot}</td>
               </tr>
             ))}
           </tbody>

@@ -1,36 +1,68 @@
+import { useEffect, useState } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
-
-const bobot = {
-  c1: 0.25,
-  c2: 0.35,
-  c3: 0.2,
-  c4: 0.2,
-};
-
-const data = [
-  { nama: "Andi", c1: 90, c2: 92, c3: 88, c4: 95 },
-  { nama: "Budi", c1: 85, c2: 90, c3: 80, c4: 88 },
-];
+import { getNilai } from "../../services/nilaiService";
 
 export default function PerhitunganMoora() {
-  const normalisasi = (key) =>
-    Math.sqrt(data.reduce((sum, d) => sum + d[key] ** 2, 0));
+  const [data, setData] = useState([]);
+  const [hasil, setHasil] = useState([]);
 
-  const hasil = data.map((d) => {
-    const yi =
-      (d.c1 / normalisasi("c1")) * bobot.c1 +
-      (d.c2 / normalisasi("c2")) * bobot.c2 +
-      (d.c3 / normalisasi("c3")) * bobot.c3 +
-      (d.c4 / normalisasi("c4")) * bobot.c4;
+  const bobot = {
+    kehadiran: 0.20,
+    produktivitas: 0.25,
+    kualitas: 0.15,
+    disiplin: 0.20,
+    kesalahan: 0.10,      // COST
+    penyelesaian: 0.10,   // COST
+  };
 
-    return { ...d, yi: yi.toFixed(4) };
-  });
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const kategori = (yi) => {
-    if (yi >= 0.96) return "Sangat Baik";
-    if (yi >= 0.9) return "Baik";
-    if (yi >= 0.8) return "Cukup Baik";
-    return "Kurang Baik";
+  const fetchData = async () => {
+    const res = await getNilai();
+    setData(res);
+  };
+
+  const hitungMoora = () => {
+    if (data.length === 0) {
+      alert("Data nilai masih kosong!");
+      return;
+    }
+
+    // Hitung akar tiap kolom
+    const akar = {};
+    Object.keys(bobot).forEach((key) => {
+      akar[key] = Math.sqrt(
+        data.reduce((sum, item) => sum + Math.pow(item[key], 2), 0)
+      );
+    });
+
+    const perhitungan = data.map((item) => {
+      const norm = {};
+      Object.keys(bobot).forEach((key) => {
+        norm[key] = item[key] / akar[key];
+      });
+
+      const benefit =
+        norm.kehadiran * bobot.kehadiran +
+        norm.produktivitas * bobot.produktivitas +
+        norm.kualitas * bobot.kualitas +
+        norm.disiplin * bobot.disiplin;
+
+      const cost =
+        norm.kesalahan * bobot.kesalahan +
+        norm.penyelesaian * bobot.penyelesaian;
+
+      const yi = benefit - cost;
+
+      return {
+        ...item,
+        yi,
+      };
+    });
+
+    setHasil(perhitungan);
   };
 
   return (
@@ -39,26 +71,45 @@ export default function PerhitunganMoora() {
         Perhitungan MOORA
       </h2>
 
-      <table className="w-full bg-white rounded shadow text-sm">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="p-2 border">Nama</th>
-            <th className="p-2 border">Nilai Yi</th>
-            <th className="p-2 border">Kategori</th>
-          </tr>
-        </thead>
-        <tbody>
-          {hasil.map((h) => (
-            <tr key={h.nama}>
-              <td className="p-2 border">{h.nama}</td>
-              <td className="p-2 border">{h.yi}</td>
-              <td className="p-2 border">
-                {kategori(h.yi)}
-              </td>
+      <button
+        onClick={hitungMoora}
+        className="mb-4 bg-blue-600 text-white px-4 py-2 rounded"
+      >
+        Hitung MOORA
+      </button>
+
+      <div className="overflow-x-auto">
+        <table className="w-full bg-white rounded shadow text-sm">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="p-2 border">No</th>
+              <th className="p-2 border">Nama</th>
+              <th className="p-2 border">Nilai Yi</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {hasil.map((item, index) => (
+              <tr key={item.id}>
+                <td className="p-2 border text-center">
+                  {index + 1}
+                </td>
+                <td className="p-2 border">{item.nama}</td>
+                <td className="p-2 border text-center">
+                  {item.yi.toFixed(3)}
+                </td>
+              </tr>
+            ))}
+
+            {hasil.length === 0 && (
+              <tr>
+                <td colSpan="3" className="text-center p-4 text-gray-500">
+                  Klik tombol "Hitung MOORA" untuk melihat hasil
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </AdminLayout>
   );
 }
