@@ -3,10 +3,12 @@ import { useState } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!username || !password) {
@@ -14,23 +16,43 @@ export default function Login() {
       return;
     }
 
-    // 🔹 SIMULASI ROLE
-    const role = username === "admin" ? "admin" : "staff";
+    try {
+      setLoading(true);
 
-    // simpan ke localStorage
-    localStorage.setItem(
-      "user",
-      JSON.stringify({
-        username,
-        role,
-      })
-    );
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      });
 
-    // 🔹 ROLE-BASED REDIRECT
-    if (role === "admin") {
-      navigate("/dashboard");
-    } else {
-      navigate("/dashboardstaff");
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message || "Login gagal");
+        return;
+      }
+
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("accessToken", data.accessToken);
+
+      if (data.user.role === "super_admin") {
+        navigate("/dashboard");
+      } else if (data.user.role === "staff") {
+        navigate("/dashboardstaff");
+      } else {
+        alert("Role tidak dikenali");
+      }
+
+    } catch (error) {
+      console.error(error);
+      alert("Gagal terhubung ke server");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,12 +82,16 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className="w-full bg-blue-600 text-white py-2 rounded">
-          Login
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-blue-600 text-white py-2 rounded disabled:bg-gray-400"
+        >
+          {loading ? "Loading..." : "Login"}
         </button>
 
         <p className="text-xs text-gray-500 mt-3 text-center">
-          login sebagai <b>admin</b> atau <b>staff</b>
+          Masukkan username dan password
         </p>
       </form>
     </div>
