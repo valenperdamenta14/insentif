@@ -11,8 +11,8 @@ export default function PerhitunganMoora() {
     produktivitas: 0.25,
     kualitas: 0.15,
     disiplin: 0.20,
-    kesalahan: 0.10,      // COST
-    penyelesaian: 0.10,   // COST
+    kesalahan: 0.10,
+    penyelesaian: 0.10,
   };
 
   useEffect(() => {
@@ -30,7 +30,6 @@ export default function PerhitunganMoora() {
       return;
     }
 
-    // Hitung akar tiap kolom
     const akar = {};
     Object.keys(bobot).forEach((key) => {
       akar[key] = Math.sqrt(

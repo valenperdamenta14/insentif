@@ -52,7 +52,6 @@ export default function InputNilai() {
         + Tambah Nilai
       </button>
 
-      {/* Modal Tambah */}
       {showTambah && (
         <TambahNilaiModal
           onClose={() => setShowTambah(false)}
@@ -60,7 +59,6 @@ export default function InputNilai() {
         />
       )}
 
-      {/* Modal Edit */}
       {editData && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg w-[500px]">
@@ -103,7 +101,6 @@ export default function InputNilai() {
         </div>
       )}
 
-      {/* TABEL */}
       <div className="bg-white rounded shadow overflow-x-auto">
         <table className="w-full text-sm text-center">
           <thead className="bg-gray-100">

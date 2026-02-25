@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import landscape from "../assets/landscape.jpg";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -57,43 +58,46 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleLogin}
-        className="bg-white p-6 rounded shadow w-[360px]"
+  <div
+    className="min-h-screen flex items-center justify-center bg-cover bg-center"
+    style={{ backgroundImage: `url(${landscape})` }}
+  >
+    <form
+      onSubmit={handleLogin}
+      className="bg-white/90 backdrop-blur-md p-6 rounded-xl shadow-lg w-[360px]"
+    >
+      <h1 className="text-xl font-semibold mb-4 text-center">
+        Login
+      </h1>
+
+      <input
+        type="text"
+        placeholder="Username"
+        className="w-full border px-3 py-2 rounded mb-3"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+
+      <input
+        type="password"
+        placeholder="Password"
+        className="w-full border px-3 py-2 rounded mb-4"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="w-full bg-blue-600 text-white py-2 rounded disabled:bg-gray-400"
       >
-        <h1 className="text-xl font-semibold mb-4 text-center">
-          Login
-        </h1>
+        {loading ? "Loading..." : "Login"}
+      </button>
 
-        <input
-          type="text"
-          placeholder="Username"
-          className="w-full border px-3 py-2 rounded mb-3"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full border px-3 py-2 rounded mb-4"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded disabled:bg-gray-400"
-        >
-          {loading ? "Loading..." : "Login"}
-        </button>
-
-        <p className="text-xs text-gray-500 mt-3 text-center">
-          Masukkan username dan password
-        </p>
-      </form>
-    </div>
-  );
+      <p className="text-xs text-gray-500 mt-3 text-center">
+        Masukkan username dan password
+      </p>
+    </form>
+  </div>
+);
 }

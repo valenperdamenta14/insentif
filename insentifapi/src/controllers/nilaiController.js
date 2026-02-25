@@ -1,6 +1,5 @@
 const db = require("../config/db");
 
-// Get all nilai
 exports.getNilai = (req, res) => {
   db.query("SELECT * FROM data_nilai", (err, results) => {
     if (err) return res.status(500).json({ error: err });
@@ -8,7 +7,6 @@ exports.getNilai = (req, res) => {
   });
 };
 
-// Get single nilai by id
 exports.getNilaiById = (req, res) => {
   const { id } = req.params;
   db.query("SELECT * FROM data_nilai WHERE id = ?", [id], (err, results) => {
@@ -17,7 +15,6 @@ exports.getNilaiById = (req, res) => {
   });
 };
 
-// Create new nilai
 exports.createNilai = (req, res) => {
   const { nama, kehadiran, produktivitas, kualitas, disiplin, kesalahan, penyelesaian } = req.body;
   db.query(
@@ -30,7 +27,6 @@ exports.createNilai = (req, res) => {
   );
 };
 
-// Update nilai
 exports.updateNilai = (req, res) => {
   const { id } = req.params;
   const { nama, kehadiran, produktivitas, kualitas, disiplin, kesalahan, penyelesaian } = req.body;
@@ -44,7 +40,6 @@ exports.updateNilai = (req, res) => {
   );
 };
 
-// Delete nilai
 exports.deleteNilai = (req, res) => {
   const { id } = req.params;
   db.query("DELETE FROM data_nilai WHERE id = ?", [id], (err) => {

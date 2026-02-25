@@ -1,6 +1,5 @@
 const db = require("../config/db");
 
-// GET semua karyawan
 exports.getKaryawan = (req, res) => {
   const sql = "SELECT * FROM data_karyawan";
 
@@ -10,7 +9,6 @@ exports.getKaryawan = (req, res) => {
   });
 };
 
-// POST tambah karyawan
 exports.tambahKaryawan = (req, res) => {
   if (!req.body) {
     return res.status(400).json({ message: "Body kosong" });
@@ -37,7 +35,6 @@ exports.tambahKaryawan = (req, res) => {
   });
 };
 
-// PUT update karyawan
 exports.updateKaryawan = (req, res) => {
   const { id } = req.params;
   const { nama, jabatan } = req.body;
@@ -52,7 +49,6 @@ exports.updateKaryawan = (req, res) => {
   });
 };
 
-// DELETE karyawan
 exports.hapusKaryawan = (req, res) => {
   const { id } = req.params;
 

@@ -9,7 +9,7 @@ import HasilInsentif from "./pages/admin/HasilInsentif";
 import DataKriteria from "./pages/admin/DataKriteria";
 import Laporan from "./pages/admin/Laporan";
 import DashboardStaff from "./pages/staff/DashboardStaff";
-import InsentifSaya from "./pages/staff/InsentifSaya";
+import InsentifSaya from "./pages/staff/DataKaryawanStaff";
 
 export default function App() {
   return (
@@ -29,7 +29,7 @@ export default function App() {
 
         {/* staff */}
         <Route path="/dashboardstaff" element={<DashboardStaff />} />
-        <Route path="/insentif-saya" element={<InsentifSaya />} />
+        <Route path="/datastaff" element={<InsentifSaya />} />
       </Routes>
     </BrowserRouter>
   );

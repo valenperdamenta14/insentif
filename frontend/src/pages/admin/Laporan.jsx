@@ -84,7 +84,6 @@ export default function Laporan() {
         Laporan Insentif
       </h2>
 
-      {/* Filter */}
       <div className="bg-white p-4 rounded shadow mb-6 flex gap-4 items-center">
         <select
           value={periode}
@@ -104,7 +103,6 @@ export default function Laporan() {
         </button>
       </div>
 
-      {/* Tabel */}
       <div className="bg-white rounded shadow overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-gray-100">

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import landscape from "../assets/landscape.jpg";
+import bglanding from "../assets/bglanding.jpg";
 
 export default function LandingPage() {
   const navigate = useNavigate();
@@ -8,16 +8,14 @@ export default function LandingPage() {
     <div
       className="min-h-screen relative flex"
       style={{
-        backgroundImage: `url(${landscape})`,
+        backgroundImage: `url(${bglanding})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Overlay biar teks kontras */}
       <div className="absolute inset-0 bg-black/40"></div>
 
-      {/* Konten utama */}
       <div className="relative z-10 flex items-center w-full px-20">
         <div className="bg-white/95 backdrop-blur w-[540px] min-h-[280px] rounded-xl shadow-lg flex flex-col items-center justify-center gap-8 px-8">
 

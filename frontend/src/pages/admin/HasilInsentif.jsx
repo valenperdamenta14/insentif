@@ -11,8 +11,8 @@ export default function HasilInsentif() {
     produktivitas: 0.25,
     kualitas: 0.15,
     disiplin: 0.20,
-    kesalahan: 0.10,      // COST
-    penyelesaian: 0.10,   // COST
+    kesalahan: 0.10,
+    penyelesaian: 0.10,
   };
 
   useEffect(() => {
@@ -28,7 +28,6 @@ export default function HasilInsentif() {
   const hitungMoora = (dataset) => {
     if (!dataset || dataset.length === 0) return;
 
-    // Hitung akar tiap kolom
     const akar = {};
     Object.keys(bobot).forEach((key) => {
       akar[key] = Math.sqrt(
@@ -57,7 +56,6 @@ export default function HasilInsentif() {
       return { ...item, yi };
     });
 
-    // Sorting & Ranking
     const sorted = perhitungan
       .sort((a, b) => b.yi - a.yi)
       .map((item, index) => ({
@@ -70,7 +68,6 @@ export default function HasilInsentif() {
     setHasil(sorted);
   };
 
-  // kategori insentif
   const getKategori = (yi) => {
     if (yi >= 0.18) return "Sangat Baik";
     if (yi >= 0.15) return "Baik";

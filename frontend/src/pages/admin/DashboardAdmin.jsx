@@ -61,7 +61,6 @@ export default function DashboardAdmin() {
       return benefit - cost;
     });
 
-    // Hitung yang lolos threshold skripsi
     return hasil.filter((yi) => yi > 0.134).length;
   };
 

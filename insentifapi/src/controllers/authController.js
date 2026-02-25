@@ -2,7 +2,6 @@ const db = require("../config/db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-// LOGIN
 exports.login = (req, res) => {
   const { username, password } = req.body;
 
@@ -29,21 +28,18 @@ exports.login = (req, res) => {
       return res.status(401).json({ message: "Password salah" });
     }
 
-    // ACCESS TOKEN
     const accessToken = jwt.sign(
       { id: user.id, role: user.role },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "15m" }
     );
 
-    // REFRESH TOKEN
     const refreshToken = jwt.sign(
       { id: user.id },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "7d" }
     );
 
-    // simpan refresh token ke database
     db.query(
       "UPDATE users SET refresh_token = ? WHERE id = ?",
       [refreshToken, user.id]
@@ -62,7 +58,6 @@ exports.login = (req, res) => {
   });
 };
 
-// REGISTER
 exports.register = async (req, res) => {
   const { nama, username, password, role } = req.body;
 
@@ -73,7 +68,6 @@ exports.register = async (req, res) => {
   }
 
   try {
-    // cek username sudah ada atau belum
     db.query(
       "SELECT * FROM users WHERE username = ?",
       [username],
@@ -86,10 +80,8 @@ exports.register = async (req, res) => {
           });
         }
 
-        // hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // insert user
         db.query(
           "INSERT INTO users (nama, username, password, role) VALUES (?, ?, ?, ?)",
           [nama, username, hashedPassword, role],
