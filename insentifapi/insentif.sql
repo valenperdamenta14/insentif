@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2026 at 07:16 AM
+-- Generation Time: Feb 26, 2026 at 06:22 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `data_karyawan` (
   `id` int(11) NOT NULL,
   `nama` varchar(255) NOT NULL,
-  `jabatan` enum('Admin Gudang','Admin Barang Keluar','Kepala Gudang','') NOT NULL
+  `jabatan` enum('Admin Gudang','Admin Barang','Kepala Gudang','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -38,23 +38,23 @@ CREATE TABLE `data_karyawan` (
 --
 
 INSERT INTO `data_karyawan` (`id`, `nama`, `jabatan`) VALUES
-(1, 'Tripam Budi', ''),
-(2, 'Rizal', ''),
-(3, 'Sukiman', ''),
-(4, 'Mario', ''),
-(5, 'Zulkarnain', ''),
-(6, 'Yamin', ''),
-(7, 'Yamin', ''),
-(8, 'Gufron', ''),
-(9, 'Kasiadi', ''),
-(10, 'Disky', ''),
-(11, 'Wagimin', ''),
-(12, 'Ijun', ''),
-(13, 'Xixu', ''),
-(14, 'Budianto', ''),
-(15, 'Irul', ''),
+(1, 'Tripam Budi', 'Admin Barang'),
+(2, 'Rizal', 'Kepala Gudang'),
+(3, 'Sukiman', 'Admin Barang'),
+(4, 'Mario', 'Admin Barang'),
+(5, 'Zulkarnain', 'Admin Barang'),
+(6, 'Rasidin', 'Kepala Gudang'),
+(7, 'Yamin', 'Admin Barang'),
+(8, 'Gufron', 'Admin Barang'),
+(9, 'Kasiadi', 'Admin Barang'),
+(10, 'Disky', 'Admin Barang'),
+(11, 'Wagimin', 'Admin Gudang'),
+(12, 'Ijun', 'Admin Barang'),
+(13, 'Xixu', 'Admin Gudang'),
+(14, 'Budianto', 'Admin Barang'),
+(15, 'Irul', 'Admin Barang'),
 (16, 'Ewin', 'Admin Gudang'),
-(17, 'Budianto', 'Admin Gudang'),
+(17, 'Dedek', 'Admin Gudang'),
 (18, 'Sahyudi', 'Admin Gudang'),
 (19, 'Handoko', 'Admin Gudang'),
 (20, 'Rahmadani', 'Admin Gudang');
@@ -97,10 +97,35 @@ INSERT INTO `data_nilai` (`id`, `nama`, `kehadiran`, `produktivitas`, `kualitas`
 (14, 'Budianto', 76, 89, 90, 85, 78, 85),
 (15, 'Irul', 75, 84, 93, 76, 83, 73),
 (16, 'Ewin', 86, 93, 87, 72, 91, 76),
-(17, 'Budianto', 78, 87, 95, 84, 83, 84),
+(17, 'Dedek', 78, 87, 95, 84, 83, 84),
 (18, 'Sahyudi', 93, 93, 64, 81, 78, 83),
 (19, 'Handoko', 78, 98, 78, 86, 89, 82),
 (20, 'Rahmadani', 82, 86, 86, 78, 73, 84);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('super_admin','staff') NOT NULL,
+  `refresh_token` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `nama`, `username`, `password`, `role`, `refresh_token`, `created_at`, `updated_at`) VALUES
+(3, 'Windi', 'windi', '$2b$10$vmnXEjxst1yQlU4OfevWe.Z2oINLDiqdhwtCXJqV5EpQ3eukrjIei', 'super_admin', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzcxOTk1NDE3LCJleHAiOjE3NzI2MDAyMTd9.Sc0potITvbShaYkSeBOi1scApXxDdaH_fGn02DYDYlE', '2026-02-18 14:33:12', '2026-02-25 04:56:57'),
+(4, 'Nurul', 'nurul', '$2b$10$D3iRVyYl4DG7DHyyyqyOZuAgyqRnAGzBg9Td8SJnLkLjx2ZYsjj2m', 'staff', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzcxOTk1NjUwLCJleHAiOjE3NzI2MDA0NTB9.G9XMp3PHwZRntF-l4U95vV__cA8DKd4f7LlIazg7OOA', '2026-02-18 14:35:24', '2026-02-25 05:00:50');
 
 --
 -- Indexes for dumped tables
@@ -117,6 +142,23 @@ ALTER TABLE `data_karyawan`
 --
 ALTER TABLE `data_nilai`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
