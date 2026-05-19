@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2026 at 06:22 AM
+-- Generation Time: May 19, 2026 at 03:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `data_karyawan` (
   `id` int(11) NOT NULL,
-  `nama` varchar(255) NOT NULL,
-  `jabatan` enum('Admin Gudang','Admin Barang','Kepala Gudang','') NOT NULL
+  `nama` varchar(100) NOT NULL,
+  `jabatan` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -48,16 +48,16 @@ INSERT INTO `data_karyawan` (`id`, `nama`, `jabatan`) VALUES
 (8, 'Gufron', 'Admin Barang'),
 (9, 'Kasiadi', 'Admin Barang'),
 (10, 'Disky', 'Admin Barang'),
-(11, 'Wagimin', 'Admin Gudang'),
+(11, 'Wagimin', 'Admin Barang'),
 (12, 'Ijun', 'Admin Barang'),
-(13, 'Xixu', 'Admin Gudang'),
+(13, 'Xixu', 'Admin Barang'),
 (14, 'Budianto', 'Admin Barang'),
 (15, 'Irul', 'Admin Barang'),
-(16, 'Ewin', 'Admin Gudang'),
-(17, 'Dedek', 'Admin Gudang'),
-(18, 'Sahyudi', 'Admin Gudang'),
-(19, 'Handoko', 'Admin Gudang'),
-(20, 'Rahmadani', 'Admin Gudang');
+(16, 'Ewin', 'Admin Barang'),
+(17, 'Dedek', 'Admin Barang'),
+(18, 'Sahyudi', 'Admin Barang'),
+(19, 'Handoko', 'Admin Barang'),
+(20, 'Rahmadani', 'Admin Barang');
 
 -- --------------------------------------------------------
 
@@ -124,7 +124,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nama`, `username`, `password`, `role`, `refresh_token`, `created_at`, `updated_at`) VALUES
-(3, 'Windi', 'windi', '$2b$10$vmnXEjxst1yQlU4OfevWe.Z2oINLDiqdhwtCXJqV5EpQ3eukrjIei', 'super_admin', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzcxOTk1NDE3LCJleHAiOjE3NzI2MDAyMTd9.Sc0potITvbShaYkSeBOi1scApXxDdaH_fGn02DYDYlE', '2026-02-18 14:33:12', '2026-02-25 04:56:57'),
+(3, 'Windi', 'windi', '$2b$10$vmnXEjxst1yQlU4OfevWe.Z2oINLDiqdhwtCXJqV5EpQ3eukrjIei', 'super_admin', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzc5MTkzMzMzLCJleHAiOjE3Nzk3OTgxMzN9.0rAr4V9YMFKxBvdkBvt7LzjflMbb3W5r2mwvJkUXNFc', '2026-02-18 14:33:12', '2026-05-19 12:22:13'),
 (4, 'Nurul', 'nurul', '$2b$10$D3iRVyYl4DG7DHyyyqyOZuAgyqRnAGzBg9Td8SJnLkLjx2ZYsjj2m', 'staff', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzcxOTk1NjUwLCJleHAiOjE3NzI2MDA0NTB9.G9XMp3PHwZRntF-l4U95vV__cA8DKd4f7LlIazg7OOA', '2026-02-18 14:35:24', '2026-02-25 05:00:50');
 
 --
@@ -153,6 +153,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `data_karyawan`
+--
+ALTER TABLE `data_karyawan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `users`

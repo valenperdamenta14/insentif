@@ -36,13 +36,16 @@ export default function KaryawanModal({
             value={nama}
             onChange={(e) => setNama(e.target.value)}
           />
-          <input
-            type="text"
-            placeholder="Jabatan"
+
+          <select
             className="w-full border px-3 py-2 rounded"
             value={jabatan}
             onChange={(e) => setJabatan(e.target.value)}
-          />
+          >
+            <option value="">-- Pilih Jabatan --</option>
+            <option value="Manager">Kepala Gudang</option>
+            <option value="Supervisor">Admin Barang</option>
+          </select>
         </div>
 
         <div className="flex justify-end gap-3 mt-5">
@@ -52,6 +55,7 @@ export default function KaryawanModal({
           >
             Batal
           </button>
+
           <button
             onClick={() => onSubmit({ nama, jabatan })}
             className="px-4 py-2 bg-blue-600 text-white rounded"

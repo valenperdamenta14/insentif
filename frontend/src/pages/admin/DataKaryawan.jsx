@@ -24,7 +24,7 @@ export default function DataKaryawan() {
 
   const handleSubmit = async (formData) => {
     if (editData) {
-      await updateKaryawan(editData.id_karyawan, formData);
+      await updateKaryawan(editData.id, formData);
     } else {
       await tambahKaryawan(formData);
     }
@@ -94,7 +94,7 @@ export default function DataKaryawan() {
                       Edit
                     </button>
                     <button
-                      onClick={() => handleHapus(k.id_karyawan)}
+                      onClick={() => handleHapus(k.id)}
                       className="bg-red-500 text-white px-3 py-1 rounded text-xs"
                     >
                       Hapus

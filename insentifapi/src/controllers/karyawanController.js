@@ -4,16 +4,18 @@ exports.getKaryawan = (req, res) => {
   const sql = "SELECT * FROM data_karyawan";
 
   db.query(sql, (err, result) => {
-    if (err) return res.status(500).json(err);
+    if (err) {
+      console.error(err);
+      return res.status(500).json({
+        message: "Gagal mengambil data",
+      });
+    }
+
     res.json(result);
   });
 };
 
 exports.tambahKaryawan = (req, res) => {
-  if (!req.body) {
-    return res.status(400).json({ message: "Body kosong" });
-  }
-
   const { nama, jabatan } = req.body;
 
   if (!nama || !jabatan) {
@@ -26,11 +28,18 @@ exports.tambahKaryawan = (req, res) => {
     "INSERT INTO data_karyawan (nama, jabatan) VALUES (?, ?)";
 
   db.query(sql, [nama, jabatan], (err, result) => {
-    if (err) return res.status(500).json(err);
+    if (err) {
+      console.error(err);
 
-    res.json({
+      return res.status(500).json({
+        message: "Gagal menambahkan karyawan",
+        error: err.sqlMessage,
+      });
+    }
+
+    res.status(201).json({
       message: "Karyawan berhasil ditambahkan",
-      id_karyawan: result.insertId,
+      id: result.insertId,
     });
   });
 };
@@ -40,12 +49,20 @@ exports.updateKaryawan = (req, res) => {
   const { nama, jabatan } = req.body;
 
   const sql =
-    "UPDATE data_karyawan SET nama=?, jabatan=? WHERE id_karyawan=?";
+    "UPDATE data_karyawan SET nama=?, jabatan=? WHERE id=?";
 
-  db.query(sql, [nama, jabatan, id], (err) => {
-    if (err) return res.status(500).json(err);
+  db.query(sql, [nama, jabatan, id], (err, result) => {
+    if (err) {
+      console.error(err);
 
-    res.json({ message: "Karyawan berhasil diupdate" });
+      return res.status(500).json({
+        message: "Gagal update data",
+      });
+    }
+
+    res.json({
+      message: "Karyawan berhasil diupdate",
+    });
   });
 };
 
@@ -53,11 +70,19 @@ exports.hapusKaryawan = (req, res) => {
   const { id } = req.params;
 
   const sql =
-    "DELETE FROM data_karyawan WHERE id_karyawan=?";
+    "DELETE FROM data_karyawan WHERE id=?";
 
   db.query(sql, [id], (err) => {
-    if (err) return res.status(500).json(err);
+    if (err) {
+      console.error(err);
 
-    res.json({ message: "Karyawan berhasil dihapus" });
+      return res.status(500).json({
+        message: "Gagal hapus data",
+      });
+    }
+
+    res.json({
+      message: "Karyawan berhasil dihapus",
+    });
   });
 };
