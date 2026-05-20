@@ -43,8 +43,8 @@ export default function KaryawanModal({
             onChange={(e) => setJabatan(e.target.value)}
           >
             <option value="">-- Pilih Jabatan --</option>
-            <option value="Manager">Kepala Gudang</option>
-            <option value="Supervisor">Admin Barang</option>
+            <option value="Kepala Gudang">Kepala Gudang</option>
+            <option value="Admin Barang">Admin Barang</option>
           </select>
         </div>
 
