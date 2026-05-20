@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-export default function TambahNilaiModal({ onClose, onSave }) {
+export default function TambahNilaiModal({
+  onClose,
+  onSave,
+  karyawan,
+}) {
   const [form, setForm] = useState({
     nama: "",
     kehadiran: "",
@@ -25,16 +29,73 @@ export default function TambahNilaiModal({ onClose, onSave }) {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center">
       <div className="bg-white p-6 rounded-lg w-[500px]">
-        <h3 className="text-xl font-semibold mb-4">Tambah Nilai</h3>
+        <h3 className="text-xl font-semibold mb-4">
+          Tambah Nilai
+        </h3>
 
         <div className="grid grid-cols-2 gap-3">
-          <input name="nama" placeholder="Nama" className="border p-2 rounded" onChange={handleChange} />
-          <input name="kehadiran" type="number" placeholder="Kehadiran" className="border p-2 rounded" onChange={handleChange} />
-          <input name="produktivitas" type="number" placeholder="Produktivitas" className="border p-2 rounded" onChange={handleChange} />
-          <input name="kualitas" type="number" placeholder="Kualitas" className="border p-2 rounded" onChange={handleChange} />
-          <input name="disiplin" type="number" placeholder="Disiplin" className="border p-2 rounded" onChange={handleChange} />
-          <input name="kesalahan" type="number" placeholder="Kesalahan" className="border p-2 rounded" onChange={handleChange} />
-          <input name="penyelesaian" type="number" placeholder="Penyelesaian" className="border p-2 rounded" onChange={handleChange} />
+
+          <select
+            name="nama"
+            className="border p-2 rounded"
+            onChange={handleChange}
+          >
+            <option value="">-- Pilih Karyawan --</option>
+
+            {karyawan.map((item) => (
+              <option key={item.id} value={item.nama}>
+                {item.nama} - {item.jabatan}
+              </option>
+            ))}
+          </select>
+
+          <input
+            name="kehadiran"
+            type="number"
+            placeholder="Kehadiran"
+            className="border p-2 rounded"
+            onChange={handleChange}
+          />
+
+          <input
+            name="produktivitas"
+            type="number"
+            placeholder="Produktivitas"
+            className="border p-2 rounded"
+            onChange={handleChange}
+          />
+
+          <input
+            name="kualitas"
+            type="number"
+            placeholder="Kualitas"
+            className="border p-2 rounded"
+            onChange={handleChange}
+          />
+
+          <input
+            name="disiplin"
+            type="number"
+            placeholder="Disiplin"
+            className="border p-2 rounded"
+            onChange={handleChange}
+          />
+
+          <input
+            name="kesalahan"
+            type="number"
+            placeholder="Kesalahan"
+            className="border p-2 rounded"
+            onChange={handleChange}
+          />
+
+          <input
+            name="penyelesaian"
+            type="number"
+            placeholder="Penyelesaian"
+            className="border p-2 rounded"
+            onChange={handleChange}
+          />
         </div>
 
         <div className="flex justify-end gap-3 mt-4">
@@ -44,6 +105,7 @@ export default function TambahNilaiModal({ onClose, onSave }) {
           >
             Batal
           </button>
+
           <button
             onClick={handleSubmit}
             className="bg-green-600 text-white px-4 py-2 rounded"

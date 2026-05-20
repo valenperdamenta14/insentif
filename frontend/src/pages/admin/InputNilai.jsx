@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import TambahNilaiModal from "../../components/TambahNilaiModal";
+
 import {
   getNilai,
   createNilai,
@@ -8,14 +9,20 @@ import {
   deleteNilai,
 } from "../../services/nilaiService";
 
+import { getKaryawan } from "../../services/karyawanService";
+
 export default function InputNilai() {
   const [data, setData] = useState([]);
+  const [karyawan, setKaryawan] = useState([]);
   const [showTambah, setShowTambah] = useState(false);
   const [editData, setEditData] = useState(null);
 
   const fetchData = async () => {
-    const res = await getNilai();
-    setData(res);
+    const nilaiRes = await getNilai();
+    setData(nilaiRes);
+
+    const karyawanRes = await getKaryawan();
+    setKaryawan(karyawanRes);
   };
 
   useEffect(() => {
@@ -56,6 +63,7 @@ export default function InputNilai() {
         <TambahNilaiModal
           onClose={() => setShowTambah(false)}
           onSave={handleSave}
+          karyawan={karyawan}
         />
       )}
 
@@ -90,6 +98,7 @@ export default function InputNilai() {
               >
                 Batal
               </button>
+
               <button
                 onClick={handleUpdate}
                 className="bg-yellow-500 text-white px-4 py-2 rounded"
@@ -116,6 +125,7 @@ export default function InputNilai() {
               <th className="p-3 border">Aksi</th>
             </tr>
           </thead>
+
           <tbody>
             {data.map((item, index) => (
               <tr key={item.id} className="hover:bg-gray-50">
@@ -127,6 +137,7 @@ export default function InputNilai() {
                 <td className="p-2 border">{item.disiplin}</td>
                 <td className="p-2 border">{item.kesalahan}</td>
                 <td className="p-2 border">{item.penyelesaian}</td>
+
                 <td className="p-2 border flex justify-center gap-2">
                   <button
                     onClick={() => setEditData(item)}
@@ -134,6 +145,7 @@ export default function InputNilai() {
                   >
                     Edit
                   </button>
+
                   <button
                     onClick={() => handleDelete(item.id)}
                     className="bg-red-500 text-white px-2 py-1 rounded text-xs"
